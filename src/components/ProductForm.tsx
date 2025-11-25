@@ -10,6 +10,9 @@ interface Product {
   inStock: boolean;
   image: string;
   description: string;
+  size?: string[];
+  material?: string[];
+  brand?: string;
 }
 
 interface ProductFormProps {
@@ -17,6 +20,45 @@ interface ProductFormProps {
   onSubmit: (product: Product) => void;
   onCancel: () => void;
 }
+
+// Available categories from the data file
+const categories = [
+  'Figurines',
+  'Manga',
+  'Posters',
+  'Accessories',
+  'Tech Gadgets',
+  'Apparel',
+  'Mystery Boxes',
+];
+
+// Common materials
+const materials = [
+  'PVC',
+  'ABS Plastic',
+  'Metal',
+  'Fabric',
+  'Paper',
+  'Cotton',
+  'Polyester',
+  'TPU',
+  'PC',
+  'Neoprene',
+  'Enamel',
+  'Heat Resistant Fiber',
+  'Various',
+];
+
+// Common sizes for different categories
+const sizeOptions = {
+  'Figurines': ['Small (10cm)', 'Medium (15cm)', 'Large (20cm)', 'Extra Large (25cm)', 'XXL (30cm)'],
+  'Manga': ['Single Volume', 'Bundle (5 volumes)', 'Bundle (10 volumes)', 'Bundle (20 volumes)', 'Complete Set'],
+  'Posters': ['A4 (210mm x 297mm)', 'A3 (297mm x 420mm)', 'A2 (420mm x 594mm)', 'A1 (594mm x 841mm)'],
+  'Accessories': ['Small', 'Medium', 'Large', 'One Size Fits Most', 'Universal Fit'],
+  'Tech Gadgets': ['Standard', 'Compact', 'Full Size', 'Mini', 'Universal'],
+  'Apparel': ['S', 'M', 'L', 'XL', 'XXL'],
+  'Mystery Boxes': ['Box (Various Items)'],
+};
 
 export default function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
   const [formData, setFormData] = useState<Product>({
@@ -28,9 +70,14 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
     inStock: product?.inStock !== undefined ? product.inStock : true,
     image: product?.image || '',
     description: product?.description || '',
+    size: product?.size || [],
+    material: product?.material || [],
+    brand: product?.brand || '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [selectedSizes, setSelectedSizes] = useState<string[]>(product?.size || []);
+  const [selectedMaterials, setSelectedMaterials] = useState<string[]>(product?.material || []);
 
   useEffect(() => {
     if (product) {
@@ -39,6 +86,8 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
         price: product.price || 0,
         stock: product.stock || 0,
       });
+      setSelectedSizes(product.size || []);
+      setSelectedMaterials(product.material || []);
     }
   }, [product]);
 
@@ -95,6 +144,30 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
     }
   };
 
+  const handleSizeChange = (size: string) => {
+    const newSelectedSizes = selectedSizes.includes(size)
+      ? selectedSizes.filter(s => s !== size)
+      : [...selectedSizes, size];
+    
+    setSelectedSizes(newSelectedSizes);
+    setFormData(prev => ({
+      ...prev,
+      size: newSelectedSizes
+    }));
+  };
+
+  const handleMaterialChange = (material: string) => {
+    const newSelectedMaterials = selectedMaterials.includes(material)
+      ? selectedMaterials.filter(m => m !== material)
+      : [...selectedMaterials, material];
+    
+    setSelectedMaterials(newSelectedMaterials);
+    setFormData(prev => ({
+      ...prev,
+      material: newSelectedMaterials
+    }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -126,16 +199,19 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
         
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-2">Category *</label>
-          <input
-            type="text"
+          <select
             name="category"
             value={formData.category}
             onChange={handleChange}
             className={`w-full px-4 py-3 bg-gray-800 border ${
               errors.category ? 'border-red-500' : 'border-gray-700'
-            } rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white placeholder-gray-500`}
-            placeholder="Enter category"
-          />
+            } rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white`}
+          >
+            <option value="">Select a category</option>
+            {categories.map(category => (
+              <option key={category} value={category}>{category}</option>
+            ))}
+          </select>
           {errors.category && <p className="mt-1 text-sm text-red-400">{errors.category}</p>}
         </div>
         
@@ -148,6 +224,18 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
             onChange={handleChange}
             className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white placeholder-gray-500"
             placeholder="Enter subcategory"
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Brand</label>
+          <input
+            type="text"
+            name="brand"
+            value={formData.brand}
+            onChange={handleChange}
+            className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white placeholder-gray-500"
+            placeholder="Enter brand name"
           />
         </div>
         
@@ -195,6 +283,49 @@ export default function ProductForm({ product, onSubmit, onCancel }: ProductForm
             <option value="true">In Stock</option>
             <option value="false">Out of Stock</option>
           </select>
+        </div>
+      </div>
+      
+      {/* Size Selection */}
+      <div>
+        <label className="block text-sm font-medium text-gray-300 mb-2">Size Options</label>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+          {(sizeOptions[formData.category as keyof typeof sizeOptions] || 
+            ['Small', 'Medium', 'Large', 'Extra Large', 'One Size Fits Most']).map(size => (
+            <div key={size} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`size-${size}`}
+                checked={selectedSizes.includes(size)}
+                onChange={() => handleSizeChange(size)}
+                className="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-600 rounded bg-gray-700"
+              />
+              <label htmlFor={`size-${size}`} className="ml-2 text-sm text-gray-300">
+                {size}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Material Selection */}
+      <div>
+        <label className="block text-sm font-medium text-gray-300 mb-2">Materials</label>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+          {materials.map(material => (
+            <div key={material} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`material-${material}`}
+                checked={selectedMaterials.includes(material)}
+                onChange={() => handleMaterialChange(material)}
+                className="h-4 w-4 text-yellow-500 focus:ring-yellow-500 border-gray-600 rounded bg-gray-700"
+              />
+              <label htmlFor={`material-${material}`} className="ml-2 text-sm text-gray-300">
+                {material}
+              </label>
+            </div>
+          ))}
         </div>
       </div>
       

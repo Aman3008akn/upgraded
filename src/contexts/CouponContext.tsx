@@ -14,6 +14,7 @@ interface Coupon {
   valid_until: string | null;
   is_active: boolean;
   description: string;
+  created_at?: string;
 }
 
 interface CouponContextType {
@@ -37,7 +38,8 @@ export function CouponProvider({ children }: { children: React.ReactNode }) {
       const { data, error } = await supabase
         .from('coupons')
         .select('*')
-        .eq('is_active', true);
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       setCoupons(data || []);
@@ -118,7 +120,10 @@ export function CouponProvider({ children }: { children: React.ReactNode }) {
         },
         (payload) => {
           console.log('New coupon added!', payload);
-          fetchCoupons();
+          // Instead of refetching all coupons, add the new one to the state
+          if (payload.new.is_active) {
+            setCoupons(prev => [payload.new as Coupon, ...prev]);
+          }
         }
       )
       .on(
@@ -130,7 +135,14 @@ export function CouponProvider({ children }: { children: React.ReactNode }) {
         },
         (payload) => {
           console.log('Coupon updated!', payload);
-          fetchCoupons();
+          // Instead of refetching all coupons, update the specific coupon
+          setCoupons(prev => 
+            prev.map(coupon => 
+              coupon.id === payload.new.id 
+                ? {...payload.new as Coupon, created_at: coupon.created_at} 
+                : coupon
+            )
+          );
         }
       )
       .on(
@@ -142,10 +154,13 @@ export function CouponProvider({ children }: { children: React.ReactNode }) {
         },
         (payload) => {
           console.log('Coupon deleted!', payload);
-          fetchCoupons();
+          // Instead of refetching all coupons, remove the specific coupon
+          setCoupons(prev => prev.filter(coupon => coupon.id !== payload.old.id));
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log('Coupons subscription status:', status);
+      });
     
     return () => {
       supabase.removeChannel(subscription);

@@ -14,6 +14,9 @@ export interface Product {
   stock: number;
   badges?: ('new' | 'bestseller' | 'limited')[];
   featured?: boolean;
+  size?: string[];
+  material?: string[];
+  brand?: string;
 }
 
 export const products: Product[] = [
@@ -37,6 +40,9 @@ export const products: Product[] = [
     stock: 45,
     badges: ['bestseller'],
     featured: true,
+    size: ['Large (25cm)', 'Medium (18cm)'],
+    material: ['PVC', 'ABS Plastic'],
+    brand: 'Bandai',
   },
   {
     id: 'fig-002',
@@ -55,6 +61,9 @@ export const products: Product[] = [
     stock: 32,
     badges: ['new', 'bestseller'],
     featured: true,
+    size: ['Large (22cm)'],
+    material: ['PVC'],
+    brand: 'Good Smile Company',
   },
   {
     id: 'fig-003',
@@ -73,6 +82,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 18,
     badges: ['limited'],
+    size: ['Extra Large (30cm)'],
+    material: ['PVC', 'Metal Parts'],
+    brand: 'Kotobukiya',
   },
   {
     id: 'fig-004',
@@ -91,6 +103,9 @@ export const products: Product[] = [
     stock: 8,
     badges: ['new', 'limited'],
     featured: true,
+    size: ['Large (28cm)', 'Medium (20cm)'],
+    material: ['PVC', 'ABS Plastic'],
+    brand: 'Banpresto',
   },
   {
     id: 'fig-005',
@@ -109,6 +124,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 29,
     badges: ['bestseller'],
+    size: ['Medium (18cm)'],
+    material: ['PVC'],
+    brand: 'Bandai',
   },
   {
     id: 'fig-006',
@@ -126,6 +144,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 37,
     badges: ['new'],
+    size: ['Medium (16cm)'],
+    material: ['PVC', 'Fabric Cape'],
+    brand: 'Good Smile Company',
   },
   {
     id: 'fig-007',
@@ -145,6 +166,9 @@ export const products: Product[] = [
     stock: 12,
     badges: ['limited', 'bestseller'],
     featured: true,
+    size: ['Large (25cm)'],
+    material: ['PVC', 'Translucent Parts'],
+    brand: 'Kotobukiya',
   },
   {
     id: 'fig-008',
@@ -162,6 +186,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 24,
     badges: ['new'],
+    size: ['Medium (17cm)'],
+    material: ['PVC'],
+    brand: 'Banpresto',
   },
 
   // Manga
@@ -183,6 +210,9 @@ export const products: Product[] = [
     stock: 15,
     badges: ['bestseller', 'limited'],
     featured: true,
+    size: ['Box Set (34 volumes)'],
+    material: ['Paper'],
+    brand: 'Kodansha',
   },
   {
     id: 'manga-002',
@@ -200,6 +230,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 28,
     badges: ['bestseller'],
+    size: ['Bundle (23 volumes)'],
+    material: ['Paper'],
+    brand: 'Shueisha',
   },
   {
     id: 'manga-003',
@@ -218,6 +251,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 35,
     badges: ['new'],
+    size: ['Bundle (20 volumes)'],
+    material: ['Paper'],
+    brand: 'Shueisha',
   },
   {
     id: 'manga-004',
@@ -235,6 +271,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 42,
     badges: ['new'],
+    size: ['Standard (1 volume)'],
+    material: ['Paper'],
+    brand: 'Shueisha',
   },
   {
     id: 'manga-005',
@@ -253,6 +292,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 23,
     badges: ['bestseller'],
+    size: ['Bundle (35 volumes)'],
+    material: ['Paper'],
+    brand: 'Shueisha',
   },
 
   // Posters
@@ -273,6 +315,9 @@ export const products: Product[] = [
     stock: 89,
     badges: ['bestseller'],
     featured: true,
+    size: ['A3 (297mm x 420mm)', 'A4 (210mm x 297mm)'],
+    material: ['Glossy Paper', 'Matte Paper'],
+    brand: 'Studio Ghibli Official',
   },
   {
     id: 'poster-002',
@@ -290,6 +335,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 156,
     badges: ['new'],
+    size: ['A2 (420mm x 594mm)'],
+    material: ['Matte Paper'],
+    brand: 'Gainax',
   },
   {
     id: 'poster-003',
@@ -308,6 +356,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 76,
     badges: ['bestseller'],
+    size: ['A1 (594mm x 841mm)'],
+    material: ['Glossy Paper'],
+    brand: 'Shueisha',
   },
   {
     id: 'poster-004',
@@ -325,6 +376,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 64,
     badges: ['new'],
+    size: ['A3 (297mm x 420mm)'],
+    material: ['Premium Paper'],
+    brand: 'Various',
   },
 
   // Accessories
@@ -344,6 +398,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 234,
     badges: ['bestseller'],
+    size: ['Small (5cm)', 'Medium (7cm)'],
+    material: ['Metal', 'Enamel'],
+    brand: 'AnimeGoods',
   },
   {
     id: 'acc-002',
@@ -361,6 +418,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 78,
     badges: ['new'],
+    size: ['One Size Fits Most'],
+    material: ['Fabric', 'Metal Plate'],
+    brand: 'Bandai',
   },
   {
     id: 'acc-003',
@@ -379,6 +439,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 156,
     badges: ['bestseller'],
+    size: ['Universal Fit'],
+    material: ['TPU', 'PC'],
+    brand: 'AnimeTech',
   },
   {
     id: 'acc-004',
@@ -396,6 +459,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 89,
     badges: ['new'],
+    size: ['Large (40cm x 40cm)'],
+    material: ['Cotton'],
+    brand: 'AnimeStyle',
   },
 
   // Tech Gadgets
@@ -416,6 +482,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 45,
     badges: ['bestseller'],
+    size: ['Standard'],
+    material: ['ABS Plastic', 'Rubber Grip'],
+    brand: 'Razer',
   },
   {
     id: 'tech-002',
@@ -433,6 +502,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 67,
     badges: ['new'],
+    size: ['In Ear'],
+    material: ['Plastic', 'Silicone'],
+    brand: 'Sony',
   },
   {
     id: 'tech-003',
@@ -450,6 +522,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 123,
     badges: ['new'],
+    size: ['15-inch'],
+    material: ['Neoprene', 'Polyester'],
+    brand: 'AnimeTech',
   },
   {
     id: 'tech-004',
@@ -469,6 +544,9 @@ export const products: Product[] = [
     stock: 28,
     badges: ['bestseller'],
     featured: true,
+    size: ['Full Size (104 keys)'],
+    material: ['ABS Plastic', 'Aluminum Frame'],
+    brand: 'Corsair',
   },
 
   // Apparel
@@ -490,6 +568,9 @@ export const products: Product[] = [
     stock: 34,
     badges: ['bestseller', 'limited'],
     featured: true,
+    size: ['S', 'M', 'L', 'XL'],
+    material: ['Cotton', 'Polyester'],
+    brand: 'Kotobukiya',
   },
   {
     id: 'app-002',
@@ -507,6 +588,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 123,
     badges: ['new'],
+    size: ['S', 'M', 'L', 'XL', 'XXL'],
+    material: ['Cotton'],
+    brand: 'AnimeStyle',
   },
   {
     id: 'app-003',
@@ -525,6 +609,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 67,
     badges: ['new'],
+    size: ['S', 'M', 'L', 'XL'],
+    material: ['Cotton', 'Polyester'],
+    brand: 'AnimeStyle',
   },
   {
     id: 'app-004',
@@ -542,6 +629,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 45,
     badges: ['bestseller'],
+    size: ['One Size Fits Most'],
+    material: ['Heat Resistant Fiber'],
+    brand: 'CosplayPro',
   },
 
   // Mystery Boxes
@@ -562,6 +652,9 @@ export const products: Product[] = [
     stock: 12,
     badges: ['new', 'limited'],
     featured: true,
+    size: ['Box (Various Items)'],
+    material: ['Various'],
+    brand: 'MythManga',
   },
   {
     id: 'mystery-002',
@@ -579,6 +672,9 @@ export const products: Product[] = [
     inStock: true,
     stock: 28,
     badges: ['bestseller'],
+    size: ['Box (Various Items)'],
+    material: ['Various'],
+    brand: 'MythManga',
   },
 ];
 

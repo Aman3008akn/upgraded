@@ -941,7 +941,9 @@ function CouponsManagement() {
           usage_limit: couponData.usageLimit || null,
           valid_from: couponData.validFrom || null,
           valid_until: couponData.validUntil || null,
-          description: couponData.description || ''
+          is_active: couponData.isActive !== undefined ? couponData.isActive : true,
+          description: couponData.description || '',
+          used_count: 0
         }])
         .select();
 
@@ -982,11 +984,9 @@ function CouponsManagement() {
       if (error) throw error;
       
       // Update local state
-      setCoupons(prev => 
-        prev.map(coupon => 
-          coupon.id === couponData.id ? { ...coupon, ...couponData } : coupon
-        )
-      );
+      setCoupons(coupons.map(coupon => 
+        coupon.id === couponData.id ? { ...coupon, ...couponData } : coupon
+      ));
       
       setIsEditModalOpen(false);
       setSelectedCoupon(null);
@@ -1033,7 +1033,7 @@ function CouponsManagement() {
     setIsEditModalOpen(true);
   };
 
-  const openDeleteModal = (coupon: any) => {
+  const openDeleteCouponModal = (coupon: any) => {
     setNotification({
       message: `Are you sure you want to delete coupon "${coupon.code}"? This action cannot be undone.`,
       type: 'warning'
@@ -1058,7 +1058,10 @@ function CouponsManagement() {
         },
         (payload) => {
           console.log('New coupon added!', payload);
-          fetchCoupons();
+          // Instead of refetching all coupons, add the new one to the state
+          if (payload.new.is_active) {
+            setCoupons(prev => [payload.new, ...prev]);
+          }
         }
       )
       .on(
@@ -1070,7 +1073,14 @@ function CouponsManagement() {
         },
         (payload) => {
           console.log('Coupon updated!', payload);
-          fetchCoupons();
+          // Instead of refetching all coupons, update the specific coupon
+          setCoupons(prev => 
+            prev.map(coupon => 
+              coupon.id === payload.new.id 
+                ? {...payload.new, created_at: coupon.created_at} 
+                : coupon
+            )
+          );
         }
       )
       .on(
@@ -1082,10 +1092,13 @@ function CouponsManagement() {
         },
         (payload) => {
           console.log('Coupon deleted!', payload);
-          fetchCoupons();
+          // Instead of refetching all coupons, remove the specific coupon
+          setCoupons(prev => prev.filter(coupon => coupon.id !== payload.old.id));
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log('Coupons subscription status:', status);
+      });
 
     return () => {
       supabase.removeChannel(subscription);
@@ -1248,7 +1261,7 @@ function CouponsManagement() {
                       variant="ghost" 
                       size="sm" 
                       className="text-red-400 hover:text-red-300 hover:bg-red-900/30 border border-red-800/30 rounded-lg transition-all duration-200"
-                      onClick={() => openDeleteModal(coupon)}
+                      onClick={() => openDeleteCouponModal(coupon)}
                     >
                       Delete
                     </Button>
@@ -2363,4 +2376,3 @@ export default function AdminDashboard() {
     </div>
   );
 }
-

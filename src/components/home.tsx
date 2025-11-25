@@ -54,42 +54,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[var(--secondary-color,#F5C842)] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Truck className="w-8 h-8 text-[var(--primary-color,#2C3E50)]" />
-              </div>
-              <h3 className="text-xl font-bold text-[var(--primary-color,#2C3E50)] mb-2">Fast Shipping</h3>
-              <p className="text-gray-600">Get your favorite anime merchandise delivered to your doorstep within days</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[var(--secondary-color,#F5C842)] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Shield className="w-8 h-8 text-[var(--primary-color,#2C3E50)]" />
-              </div>
-              <h3 className="text-xl font-bold text-[var(--primary-color,#2C3E50)] mb-2">Secure Payment</h3>
-              <p className="text-gray-600">Shop with confidence using our secure payment gateway</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-[var(--secondary-color,#F5C842)] rounded-full flex items-center justify-center mx-auto mb-4">
-                <Package className="w-8 h-8 text-[var(--primary-color,#2C3E50)]" />
-              </div>
-              <h3 className="text-xl font-bold text-[var(--primary-color,#2C3E50)] mb-2">Premium Quality</h3>
-              <p className="text-gray-600">Officially licensed products with the highest quality standards</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Coupons */}
-      <section className="py-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <CouponDisplay />
-        </div>
-      </section>
-
       {/* Featured Products */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -147,6 +111,42 @@ export default function Home() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-[var(--secondary-color,#F5C842)] rounded-full flex items-center justify-center mx-auto mb-4">
+                <Truck className="w-8 h-8 text-[var(--primary-color,#2C3E50)]" />
+              </div>
+              <h3 className="text-xl font-bold text-[var(--primary-color,#2C3E50)] mb-2">Fast Shipping</h3>
+              <p className="text-gray-600">Get your favorite anime merchandise delivered to your doorstep within days</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-[var(--secondary-color,#F5C842)] rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="w-8 h-8 text-[var(--primary-color,#2C3E50)]" />
+              </div>
+              <h3 className="text-xl font-bold text-[var(--primary-color,#2C3E50)] mb-2">Secure Payment</h3>
+              <p className="text-gray-600">Shop with confidence using our secure payment gateway</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-[var(--secondary-color,#F5C842)] rounded-full flex items-center justify-center mx-auto mb-4">
+                <Package className="w-8 h-8 text-[var(--primary-color,#2C3E50)]" />
+              </div>
+              <h3 className="text-xl font-bold text-[var(--primary-color,#2C3E50)] mb-2">Premium Quality</h3>
+              <p className="text-gray-600">Officially licensed products with the highest quality standards</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Coupons */}
+      <section className="py-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <CouponDisplay />
         </div>
       </section>
     </div>
